@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\CashierController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/produk', function() {
-	return view('produk.index');
-})->name('produk_index');
+// Route::get('/produk', function() {
+// 	return view('produk.index');
+// })->name('produk_index');
+
+Route::get('/', [CashierController::class, 'index'])->name('produk.index');
 
 Route::get('produk/admin', function() {
     return view('produk.admin');
