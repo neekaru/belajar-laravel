@@ -13,7 +13,7 @@
             Edit Product
         </div>
         <div class="card-body">
-            <form action="{{ route('cashier.update', $kasir->id) }}" method="POST">
+            <form action="{{ route('cashier.update', $kasir->id) }}" method="POST" id="editProductForm">
                 @csrf
                 @method('PUT')
                 
@@ -38,10 +38,11 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label for="price" class="form-label">Price</label>
+                    <label for="price_display" class="form-label">Price</label>
                     <div class="input-group">
                         <span class="input-group-text">Rp</span>
-                        <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $kasir->price) }}" required>
+                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price_display" required>
+                        <input type="hidden" id="price" name="price" value="{{ old('price', $kasir->price) }}">
                         @error('price')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -68,4 +69,55 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceDisplay = document.getElementById('price_display');
+        const priceField = document.getElementById('price');
+        const editForm = document.getElementById('editProductForm');
+        
+        // Format initial value if it exists
+        if (priceField.value) {
+            priceDisplay.value = formatNumber(priceField.value);
+        }
+        
+        priceDisplay.addEventListener('input', function(e) {
+            // Remove non-numeric characters except decimal point
+            let value = this.value.replace(/[^\d.]/g, '');
+            
+            priceField.value = value;
+            
+            this.value = formatNumber(value);
+        });
+        
+        // Before form submission, ensure raw value is stored
+        editForm.addEventListener('submit', function(e) {
+            let rawValue = priceDisplay.value.replace(/[^\d.]/g, '');
+            
+            rawValue = parseFloat(rawValue);
+            if (isNaN(rawValue)) {
+                rawValue = 0;
+            }
+            
+            priceField.value = rawValue;
+        });
+        
+        function formatNumber(num) {
+            if (!num) return '';
+            
+            // Handle decimal points (allow at most 2 decimal places)
+            const parts = num.toString().split('.');
+            const wholePart = parts[0];
+            
+            const formattedWhole = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            
+            if (parts.length > 1) {
+                const decimalPart = parts[1].substring(0, 2); // Limit to 2 decimal places
+                return formattedWhole + ',' + decimalPart;
+            }
+            
+            return formattedWhole;
+        }
+    });
+</script>
 @endsection 
