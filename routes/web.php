@@ -48,6 +48,15 @@ Route::prefix('admin')->group(function() {
     Route::delete('/', [AdminUserController::class, 'destroyAll'])->name('admin.destroy_all');
 });
 
+// Legacy routes for backward compatibility
+Route::get('produk/admin', function() {
+    return redirect()->route('admin.index');
+})->name('produk_admin');
+
+Route::get('produk/kostumer', function() {
+    return redirect()->route('customer.index');
+})->name('produk_kostumer');
+
 // Dashboard Route
 Route::get('produk/dashboard', function() {
     return view('produk.dashboard');

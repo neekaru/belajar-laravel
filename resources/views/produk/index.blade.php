@@ -10,7 +10,7 @@
             <div class="card bg-primary text-white mb-4">
                 <div class="card-body">Admin Panel</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('produk_admin') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('admin.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
             <div class="card bg-success text-white mb-4">
                 <div class="card-body">Customer Panel</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('produk_kostumer') }}">View Details</a>
+                    <a class="small text-white stretched-link" href="{{ route('customer.index') }}">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
